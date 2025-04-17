@@ -10,7 +10,7 @@ class Aquario:
         self.peixes = {}
 
     def __str__(self):
-        formato = '{} {:<3} {} {:<10} {}'
+        formato = '{} {:<3} {} {:<10 } {}'
         aquário_formatado = formato.format('|', self.id_aquário, '|', self.capacidade, '|')
         return aquário_formatado
 
