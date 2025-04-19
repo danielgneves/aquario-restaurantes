@@ -1,24 +1,15 @@
-peixes = []
+peixes = {}
 
 
 def get_peixes(): return peixes
 
 
-def inserir_peixe(peixe): peixes.append(peixe)
-
-
-def selecionar_peixes(tamanho_mínimo=None, peso_máximo=None, metodo_transporte=None):
-    filtros = '\nFiltros -- '
-    if tamanho_mínimo is not None: filtros += 'tamanho mínimo: ' + str(tamanho_mínimo) + ' cm'
-    if peso_máximo is not None: filtros += ' - peso máximo: ' + str(peso_máximo) + ' g'
-    if metodo_transporte is not None: filtros += ' - metodo transporte: ' + metodo_transporte
-    peixes_selecionados = []
-    for peixe in peixes:
-        if tamanho_mínimo is not None and peixe.tamanho < tamanho_mínimo: continue
-        if peso_máximo is not None and peixe.peso > peso_máximo: continue
-        if metodo_transporte is not None and peixe.metodo_transporte != metodo_transporte: continue
-        peixes_selecionados.append(peixe)
-    return filtros, peixes_selecionados
+def inserir_peixe(self, peixe):
+    id_peixe = peixe.id_peixe
+    if id_peixe not in self.peixes.keys():
+        self.peixes[id_peixe] = peixe
+    else:
+        print('Peixe com ID = "' + id_peixe + '" já adicionado ao Aquário')
 
 
 class Peixe:

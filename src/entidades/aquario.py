@@ -1,3 +1,5 @@
+from entidades.peixe import get_peixes
+
 aquários = {}
 
 def get_aquários(): return aquários
@@ -14,7 +16,9 @@ class Aquario:
         aquário_formatado = formato.format('|', self.id_aquário, '|', self.capacidade, '|')
         return aquário_formatado
 
-    def inserir_peixe(self, peixe):
-        id_peixe = peixe.id_peixe
-        if id_peixe not in self.peixes.keys(): self.peixes[id_peixe] = peixe
-        else: print('Peixe com ID = "' + id_peixe + '" já adicionado ao Aquário')
+    def inserir_peixe(self, ids_peixes):
+        for id_peixe in ids_peixes:
+            if id_peixe in get_peixes().keys():
+                self.peixes[id_peixe] = get_peixes()[id_peixe]
+            else:
+                print('Peixe de ID = "' + id_peixe + '" não tem cadastro')
