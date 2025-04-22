@@ -11,7 +11,7 @@ def inserir_encomenda(encomenda):
     else:
         print('Encomenda de Peixe já tem cadastro --- ' + str(encomenda))
 
-def criar_encomendas(id_aquário, nome_restaurante):
+def criar_encomendas(id_aquário, nome_restaurante, data):
     aquário = get_aquários()[id_aquário]
     if aquário is None:
         print('Aquário de ID ' + id_aquário + ' não cadastrado')
@@ -19,6 +19,9 @@ def criar_encomendas(id_aquário, nome_restaurante):
     restaurante = get_restaurantes()[nome_restaurante]
     if restaurante is None:
         print('Restaurante ' + nome_restaurante + ' não cadastrado')
+        return
+    encomenda = Encomenda(aquário, restaurante, data)
+    inserir_encomenda(encomenda)
 
 def selecionar_encomendas(data_mínima_encomenda=None, capacidade_máxima_peixes_aquário=None, estado_restaurante=None):
     filtros = '\nFiltros -- '
@@ -30,6 +33,7 @@ def selecionar_encomendas(data_mínima_encomenda=None, capacidade_máxima_peixes
         if data_mínima_encomenda is not None and encomenda.data < data_mínima_encomenda: continue
         if capacidade_máxima_peixes_aquário is not None and encomenda.aquário.capacidade_peixes > capacidade_máxima_peixes_aquário: continue
         if estado_restaurante is not None and not encomenda.restaurante.cidade_estado.endswith(estado_restaurante): continue
+        encomendas_selecionadas.append(encomenda)
     return filtros, encomendas_selecionadas
 
 class Encomenda:
@@ -42,10 +46,10 @@ class Encomenda:
     def __str__(self):
         formato = '{} {:<3} {} {:<18} {} {:<10} {}'
         encomenda_formata = formato.format('|', self.aquário.id_aquário, '|', self.restaurante.nome,
-                                            '|', self.data, '|')
+                                            '|', str(self.data), '|')
         return encomenda_formata
 
     def str_filtro(self):
-        formato = '{:<3} {} {:<10} {}'
+        formato = '{:>2} {} {:<19} {}'
         filtro_formato = formato.format(self.aquário.capacidade_peixes, '|', self.restaurante.cidade_estado, '|')
         return self.__str__() + filtro_formato
