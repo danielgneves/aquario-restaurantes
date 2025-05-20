@@ -14,14 +14,15 @@ def inserir_aquário(aquário):
 
 class Aquario:
 
-    def __init__(self, id_aquário, capacidade_peixes):
+    def __init__(self, id_aquário, capacidade_peixes, ph_água):
         self.id_aquário = id_aquário
         self.capacidade_peixes = capacidade_peixes
+        self.ph_água = ph_água
         self.peixes = {}
 
     def __str__(self):
-        formato = '{} {:<3} {} {:<1} {}'
-        aquário_formatado = formato.format('|', self.id_aquário, '|', self.capacidade_peixes, '|')
+        formato = '{} {:<3} {} {:<1} {} {:<3} {}'
+        aquário_formatado = formato.format('|', self.id_aquário, '|', self.capacidade_peixes, '|', self.ph_água, '|')
         return aquário_formatado
 
     def inserir_peixe(self, ids_peixes):
@@ -33,6 +34,5 @@ class Aquario:
             if id_peixe in get_peixes().keys():
                 peixe = get_peixes()[id_peixe]
                 self.peixes[id_peixe] = peixe
-                peixe.aquários[self.id_aquário] = self
             else:
                 print('Peixe de ID = "' + id_peixe + '" não tem cadastro')

@@ -23,16 +23,25 @@ def criar_encomendas(id_aquário, nome_restaurante, data):
     encomenda = Encomenda(aquário, restaurante, data)
     inserir_encomenda(encomenda)
 
-def selecionar_encomendas(data_mínima_encomenda=None, capacidade_máxima_peixes_aquário=None, estado_restaurante=None):
+def selecionar_encomendas(data_mínima_encomenda=None, capacidade_máxima_peixes_aquário=None, estado_restaurante=None, método_transporte_peixe=None):
     filtros = '\nFiltros -- '
     if data_mínima_encomenda is not None: filtros += 'data mínima da encomenda: ' + str(data_mínima_encomenda)
     if capacidade_máxima_peixes_aquário is not None: filtros += ' - capacidade máxima de peixes no aquário: ' + str(capacidade_máxima_peixes_aquário)
-    if estado_restaurante is not None: filtros += ' - estado do restaurante: '
+    if estado_restaurante is not None: filtros += ' - estado do restaurante: ' + estado_restaurante
+    if método_transporte_peixe is not None: filtros += ' - método de transporte do peixe: ' + método_transporte_peixe
     encomendas_selecionadas = []
     for encomenda in encomendas:
         if data_mínima_encomenda is not None and encomenda.data < data_mínima_encomenda: continue
         if capacidade_máxima_peixes_aquário is not None and encomenda.aquário.capacidade_peixes > capacidade_máxima_peixes_aquário: continue
         if estado_restaurante is not None and not encomenda.restaurante.cidade_estado.endswith(estado_restaurante): continue
+        if método_transporte_peixe is not None:
+            peixes_com_transporte = False
+            for peixe in encomenda.aquário.peixes.values():
+                if peixe.método_transporte == método_transporte_peixe:
+                    peixes_com_transporte = True
+                    break
+            if not peixes_com_transporte:
+                continue
         encomendas_selecionadas.append(encomenda)
     return filtros, encomendas_selecionadas
 
@@ -50,6 +59,7 @@ class Encomenda:
         return encomenda_formata
 
     def str_filtro(self):
-        formato = '{:>2} {} {:<19} {}'
-        filtro_formato = formato.format(self.aquário.capacidade_peixes, '|', self.restaurante.cidade_estado, '|')
+        metodos_transporte = ', '.join({peixe.método_transporte for peixe in self.aquário.peixes.values()})
+        formato = '{:>2} {} {:<19} {} {:<31} {}'
+        filtro_formato = formato.format(self.aquário.capacidade_peixes, '|', self.restaurante.cidade_estado, '|', metodos_transporte, '|')
         return self.__str__() + filtro_formato

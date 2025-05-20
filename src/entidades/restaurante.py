@@ -21,7 +21,7 @@ class Restaurante:
         self.telefone_contato = telefone_contato
 
     def __str__(self):
-        formato = '{} {:<18} {} {:<25} {} {:<19} {} {:<15} {}'
+        formato = '{} {:<18} {} {:<23} {} {:<19} {} {:<15} {}'
         restaurante_formato = formato.format('|', self.nome, '|', self.endereço, '|', self.cidade_estado, '|',
                                              self.telefone_contato, '|')
         return restaurante_formato

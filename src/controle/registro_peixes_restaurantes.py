@@ -7,16 +7,21 @@ from entidades.restaurante import inserir_restaurante, get_restaurantes, Restaur
 
 
 def cadastrar_peixes():
-    inserir_peixe(Peixe(id_peixe='101', tamanho=15.2, peso=120, metodo_transporte='saco_oxigenado'))
+    inserir_peixe(Peixe(id_peixe='101', tamanho=15.2, peso=120, método_transporte='tanque_portátil'))
     inserir_peixe(Peixe('102', 20.5, 245, 'caixa_térmica'))
-    inserir_peixe(Peixe('103', 10.8, 90, 'tanque_portátil'))
+    inserir_peixe(Peixe('103', 10.8, 90, 'caixa_térmica'))
     inserir_peixe(Peixe('104', 18.3, 180, 'saco_oxigenado'))
     inserir_peixe(Peixe('105', 22.0, 250, 'saco_oxigenado'))
-    inserir_peixe(Peixe('106', 12.5, 110, 'tanque_portátil'))
+    inserir_peixe(Peixe('106', 12.5, 110, 'caixa_térmica'))
     inserir_peixe(Peixe('107', 25.0, 350, 'caixa_térmica'))
     inserir_peixe(Peixe('108', 17.5, 200, 'saco_oxigenado'))
-    inserir_peixe(Peixe('109', 14.0, 130, 'tanque_portátil'))
+    inserir_peixe(Peixe('109', 14.0, 130, 'saco_oxigenado'))
     inserir_peixe(Peixe('110', 30.0, 500, 'caixa_térmica'))
+    inserir_peixe(Peixe('111', 16.0, 150, 'tanque_portátil'))
+    inserir_peixe(Peixe('112', 28.5, 400, 'caixa_térmica'))
+    inserir_peixe(Peixe('113', 9.5, 80, 'saco_oxigenado'))
+    inserir_peixe(Peixe('114', 15.0, 600, 'caixa_térmica'))
+    inserir_peixe(Peixe('115', 19.0, 210, 'tanque_portátil'))
 
 
 def cadastrar_restaurantes():
@@ -33,20 +38,33 @@ def cadastrar_restaurantes():
     inserir_restaurante(Restaurante('Marinhos e Cia', 'Praia do Sol, 789', 'Fortaleza - CE', '(85) 97777-8899'))
     inserir_restaurante(Restaurante('Onda Azul', 'Rua das Águas, 567', 'Belém - PA', '(91) 98888-9900'))
     inserir_restaurante(Restaurante('Peixe na Brasa', 'Rua da Praia, 234', 'Aracaju - SE', '(79) 99999-1122'))
+    inserir_restaurante(Restaurante('Tubarão Azul', 'Av. Costa e Silva, 101', 'Santos - SP', '(13) 97777-1234'))
+    inserir_restaurante(Restaurante('Costa Brava', 'Av. do Mar, 100', 'Itajaí - SC', '(47) 97777-1122'))
+    inserir_restaurante(Restaurante('Mariscaria Real', 'Av. dos Pescadores, 321', 'Salvador - BA', '(71) 95555-8765'))
+    inserir_restaurante(Restaurante('Sushi do Mar', 'Rua das Pérolas, 78', 'Manaus - AM', '(92) 93333-4567'))
+    inserir_restaurante(Restaurante('Barra do Peixe', 'Av. Beira Rio, 210', 'Porto Alegre - RS', '(51) 94444-3210'))
 
 
 def cadastrar_aquários():
-    aquário = Aquario(id_aquário='AQ1', capacidade_peixes=5)
+    aquário = Aquario(id_aquário='AQ1', capacidade_peixes=5, ph_água=7.0 )
     inserir_aquário(aquário)
     aquário.inserir_peixe(['101', '102', '103'])
 
-    aquário = Aquario('AQ2', 3)
+    aquário = Aquario('AQ2', 3, 6.5)
     inserir_aquário(aquário)
     aquário.inserir_peixe(['104', '105', '106'])
 
-    aquário = Aquario('AQ3', 4)
+    aquário = Aquario('AQ3', 4, 6.8)
     inserir_aquário(aquário)
     aquário.inserir_peixe(['107', '108', '109', '110'])
+
+    aquário = Aquario('AQ4', 6, 7.0)
+    inserir_aquário(aquário)
+    aquário.inserir_peixe(['112', '113', '114'])
+
+    aquário = Aquario('AQ5', 2, 6.7)
+    inserir_aquário(aquário)
+    aquário.inserir_peixe(['115', '104'])
 
 
 def cadastrar_encomendas():
@@ -60,9 +78,14 @@ def cadastrar_encomendas():
     criar_encomendas('AQ1', 'Peixe na Brasa', Data(6, 4, 2025))
     criar_encomendas('AQ2', 'Maré Alta', Data(6, 4, 2025))
     criar_encomendas('AQ2', 'Marinhos e Cia', Data(7, 4, 2025))
+    criar_encomendas('AQ4', 'Tubarão Azul', Data(8, 4, 2025))
+    criar_encomendas('AQ5', 'Costa Brava', Data(9, 4, 2025))
+    criar_encomendas('AQ1', 'Mariscaria Real', Data(10, 4, 2025))
+    criar_encomendas('AQ4', 'Sushi do Mar', Data(11, 4, 2025))
+    criar_encomendas('AQ5', 'Barra do Peixe', Data(12, 4, 2025))
 
 def imprimir_somente_para_alinhar_formatação():
-    print('\nAquários : ID do aquário - capacidade de peixes')
+    print('\nAquários : ID do aquário - capacidade de peixes - pH da água')
     for índice, aquário in enumerate(get_aquários().values()): print(aquário)
     print('\nPeixes : ID do peixe - tamanho - peso - forma de entrega')
     for aquário in get_aquários().values():
@@ -75,7 +98,7 @@ if __name__ == ('__main__'):
     cadastrar_peixes()
     cadastrar_aquários()
     imprimir_somente_para_alinhar_formatação()
-    print('\nAquários : ID do aquário - capacidade de peixes')
+    print('\nAquários : ID do aquário - capacidade de peixes - pH da água')
     print(' - Peixes : ID do peixe - tamanho - peso - método de transporte')
     for índice, aquário in enumerate(get_aquários().values()):
         imprimir_objeto(indice=índice, objeto_str=str(aquário))
@@ -84,11 +107,14 @@ if __name__ == ('__main__'):
     cabeçalho_encomenda = 'Encomendas : ID do aquário - nome do restaurante - data da encomenda'
     imprimir_objetos('\n' + cabeçalho_encomenda, get_encomendas())
     filtros, encomendas_selecionadas = selecionar_encomendas()
-    cabeçalho_encomenda_filtros = (cabeçalho_encomenda + '\n -- capacidade de peixes do aquário - estado do restaurante')
+    cabeçalho_encomenda_filtros = (cabeçalho_encomenda + '\n -- capacidade de peixes do aquário - cidade e estado do restaurante - métodos de transporte dos peixes')
     imprimir_objetos_associação_filtros(cabeçalho_encomenda_filtros, encomendas_selecionadas, filtros)
     filtros, encomendas_selecionadas = selecionar_encomendas(data_mínima_encomenda=Data(dia=4, mês=4, ano=2025))
     imprimir_objetos_associação_filtros(cabeçalho_encomenda_filtros, encomendas_selecionadas, filtros)
-    filtros, encomendas_selecionadas = selecionar_encomendas(Data(4, 4, 2025), capacidade_máxima_peixes_aquário=3)
+    filtros, encomendas_selecionadas = selecionar_encomendas(Data(4, 4, 2025), capacidade_máxima_peixes_aquário=4)
     imprimir_objetos_associação_filtros(cabeçalho_encomenda_filtros, encomendas_selecionadas, filtros)
-    filtros, encomendas_selecionadas = selecionar_encomendas(Data(4, 4, 2025), 3, estado_restaurante='SC')
+    filtros, encomendas_selecionadas = selecionar_encomendas(Data(4, 4, 2025), 4, estado_restaurante='SC')
     imprimir_objetos_associação_filtros(cabeçalho_encomenda_filtros, encomendas_selecionadas, filtros)
+    filtros, encomendas_selecionadas = selecionar_encomendas(Data(4, 4, 2025), 4, 'SC', método_transporte_peixe='caixa_térmica')
+    imprimir_objetos_associação_filtros(cabeçalho_encomenda_filtros, encomendas_selecionadas, filtros)
+
